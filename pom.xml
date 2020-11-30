@@ -15,7 +15,7 @@
 	<description>Proxy for å nå apper i FSS fra GCP</description>
 
 	<properties>
-		<start-class>no.nav.helse.flex.proxy.ApplicationKt</start-class>
+		<start-class>no.nav.helse.flex.fss.proxy.ApplicationKt</start-class>
 		<java.version>14</java.version>
 		<kotlin.version>1.4.10</kotlin.version>
 		<logstash-logback-encoder.version>4.10</logstash-logback-encoder.version>
