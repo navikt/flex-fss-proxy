@@ -30,4 +30,6 @@ spec:
     requests:
       cpu: 200m
       memory: 100Mi
-
+  azure:
+    application:
+      enabled: true
