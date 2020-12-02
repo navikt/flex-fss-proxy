@@ -33,3 +33,12 @@ spec:
   azure:
     application:
       enabled: true
+  accessPolicy:
+    inbound:
+      rules:
+        - application: flex-reisetilskudd-gsak
+          namespace: flex
+          cluster: prod-gcp
+  env:
+    - name: FLEX_REISETILSKUDD_GSAK_AAD_CLIENT_ID
+      value: "tmp2"

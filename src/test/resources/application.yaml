@@ -1,1 +1,2 @@
 AZURE_APP_WELL_KNOWN_URL: "http://axure"
+allowed.clientids: "flex-reisetilskudd-gsak,en-annen-app"
