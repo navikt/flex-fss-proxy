@@ -13,7 +13,7 @@ spec:
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://flex-fss-proxy.dev-fss-pub.nais.io/"
+    - "https://flex-fss-proxy.dev-fss-pub.nais.io"
   liveness:
     path: /internal/isAlive
     initialDelay: 10
