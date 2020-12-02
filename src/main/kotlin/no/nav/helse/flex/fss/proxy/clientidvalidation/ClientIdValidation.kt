@@ -1,6 +1,7 @@
 package no.nav.helse.flex.fss.proxy.clientidvalidation
 
 import no.nav.helse.flex.fss.proxy.config.ISSUER_AAD
+import no.nav.helse.flex.fss.proxy.config.PreAuthorizedClient
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import no.nav.helse.flex.fss.proxy.log
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
@@ -10,9 +11,9 @@ object ClientIdValidation {
 
     private val log = log()
 
-    fun Pair<TokenValidationContextHolder, List<String>>.validateClientId() {
+    fun Pair<TokenValidationContextHolder, List<PreAuthorizedClient>>.validateClientId() {
 
-        val clientIds = this.second
+        val clientIds = this.second.map { it.clientId }
 
         val azp = this.first.hentAzpClaim()
         if (clientIds.ikkeInneholder(azp)) {

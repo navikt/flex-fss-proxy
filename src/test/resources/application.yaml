@@ -3,3 +3,9 @@ AZURE_APP_WELL_KNOWN_URL: "http://axure"
 AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:flex-reisetilskudd-gsak\",\"clientId\":\"b0975e38-ebf7-4506-aefe-62715fac86db\"}]"
 
 logging.config: "classpath:logback-local.xml"
+
+no.nav.security.jwt:
+  issuer:
+    aad:
+      discoveryurl: http://localhost:${mock-oauth2-server.port}/aad/.well-known/openid-configuration
+      accepted_audience: flex-fss-proxy
