@@ -26,7 +26,7 @@ object ClientIdValidation {
             return this.tokenValidationContext.getJwtToken(ISSUER_AAD).jwtTokenClaims.getStringClaim("azp")!!
         } catch (e: Exception) {
             log.error("Fant ikke azp claim!", e)
-            throw e
+            throw JwtTokenUnauthorizedException(e)
         }
     }
 
