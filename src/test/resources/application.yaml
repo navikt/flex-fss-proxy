@@ -1,6 +1,4 @@
-AZURE_APP_WELL_KNOWN_URL: "http://axure"
-
-AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:flex-reisetilskudd-gsak\",\"clientId\":\"b0975e38-ebf7-4506-aefe-62715fac86db\"}]"
+AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:flex-reisetilskudd-gsak\",\"clientId\":\"gsak-client-id\"}]"
 
 logging.config: "classpath:logback-local.xml"
 

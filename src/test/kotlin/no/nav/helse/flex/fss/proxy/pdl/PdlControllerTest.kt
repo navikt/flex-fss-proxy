@@ -2,8 +2,8 @@ package no.nav.helse.flex.fss.proxy.pdl
 
 import no.nav.helse.flex.fss.proxy.Application
 import no.nav.security.mock.oauth2.MockOAuth2Server
+import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
-import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -31,12 +31,47 @@ class PdlControllerTest {
 
 
     @Test
-    fun noTokenInRequest() {
+    fun `ingen token returnerer 401`() {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/pdl/graphql")
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isUnauthorized)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized)
                 .andReturn()
     }
 
+    @Test
+    fun `riktig token returnerer 200`() {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/pdl/graphql")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token()))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+    }
 
+    @Test
+    fun `feil client returnerer 403`() {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/pdl/graphql")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token(clientId = "en-annen-client")))
+                .andExpect(MockMvcResultMatchers.status().isForbidden)
+                .andReturn()
+    }
+
+    private fun token(
+            issuerId: String = "aad",
+            clientId: String = "gsak-client-id",
+            subject: String = "Samme det",
+            audience: String = "flex-fss-proxy"
+    ): String {
+        return server.issueToken(
+                issuerId,
+                clientId,
+                DefaultOAuth2TokenCallback(
+                        issuerId,
+                        subject,
+                        audience,
+                        emptyMap(),
+                        3600
+                )
+        ).serialize()
+    }
 }

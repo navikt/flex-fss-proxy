@@ -41,6 +41,3 @@ spec:
         - application: flex-reisetilskudd-gsak
           namespace: flex
           cluster: dev-gcp
-  env:
-    - name: FLEX_REISETILSKUDD_GSAK_AAD_CLIENT_ID
-      value: "tmp1"

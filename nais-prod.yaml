@@ -13,7 +13,7 @@ spec:
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://flex-fss-proxy.fss-pub.nais.io"
+    - "https://flex-fss-proxy.prod-fss-pub.nais.io"
   liveness:
     path: /internal/isAlive
     initialDelay: 10
@@ -41,6 +41,3 @@ spec:
         - application: flex-reisetilskudd-gsak
           namespace: flex
           cluster: prod-gcp
-  env:
-    - name: FLEX_REISETILSKUDD_GSAK_AAD_CLIENT_ID
-      value: "tmp2"

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 
 @RestController
@@ -19,7 +20,7 @@ class PdlController(
 ) {
 
     @PostMapping("/api/pdl/graphql", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun graphQl(): ResponseEntity<String> {
+    fun graphQl(req: HttpServletRequest): ResponseEntity<String> {
         Pair(tokenValidationContextHolder, allowedClientIds).validateClientId()
         return ResponseEntity.ok("HEI!")
     }

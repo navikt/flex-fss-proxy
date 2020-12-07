@@ -2,9 +2,10 @@ package no.nav.helse.flex.fss.proxy.clientidvalidation
 
 import no.nav.helse.flex.fss.proxy.config.ISSUER_AAD
 import no.nav.helse.flex.fss.proxy.config.PreAuthorizedClient
-import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import no.nav.helse.flex.fss.proxy.log
-import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
+import no.nav.security.token.support.core.context.TokenValidationContextHolder
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
 
 
 object ClientIdValidation {
@@ -17,7 +18,7 @@ object ClientIdValidation {
 
         val azp = this.first.hentAzpClaim()
         if (clientIds.ikkeInneholder(azp)) {
-            throw JwtTokenUnauthorizedException("Ukjent client")
+            throw UkjentClientException("Ukjent client")
         }
 
     }
@@ -27,7 +28,7 @@ object ClientIdValidation {
             return this.tokenValidationContext.getJwtToken(ISSUER_AAD).jwtTokenClaims.getStringClaim("azp")!!
         } catch (e: Exception) {
             log.error("Fant ikke azp claim!", e)
-            throw JwtTokenUnauthorizedException(e)
+            throw UkjentClientException(e)
         }
     }
 
@@ -35,3 +36,10 @@ object ClientIdValidation {
         return !this.contains(s)
     }
 }
+
+@ResponseStatus(HttpStatus.FORBIDDEN)
+class UkjentClientException : RuntimeException {
+    constructor(msg: String) : super(msg)
+    constructor(cause: Throwable) : super(cause)
+}
+
