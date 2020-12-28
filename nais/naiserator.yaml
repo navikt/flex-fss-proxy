@@ -1,19 +1,19 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: flex-fss-proxy
-  namespace: flex
+  name: {{app}}
+  namespace: {{namespace}}
   labels:
-    team: flex
+    team: {{team}}
 spec:
-  image: {{ image }}
+  image: {{image}}
   replicas:
     min: 1
     max: 1
     cpuThresholdPercentage: 90
   port: 8080
   ingresses:
-    - "https://flex-fss-proxy.dev-fss-pub.nais.io"
+    - {{ingress}}
   liveness:
     path: /internal/isAlive
     initialDelay: 10
@@ -32,12 +32,18 @@ spec:
     requests:
       cpu: 200m
       memory: 100Mi
-  azure:
-    application:
-      enabled: true
   accessPolicy:
     inbound:
       rules:
         - application: flex-reisetilskudd-gsak
           namespace: flex
-          cluster: dev-gcp
+          cluster: {{environment}}-gcp
+  azure:
+    application:
+      enabled: true
+      tenant: {{azureTenant}}
+  env:
+  {{#each env}}
+     - name: {{@key}}
+       value: {{this}}
+  {{/each}}
