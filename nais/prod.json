@@ -6,5 +6,6 @@
   "environment": "prod",
   "ingress": "https://flex-fss-proxy.prod-fss-pub.nais.io",
   "env": {
+    "PDL_URL": "https://pdl-api.nais.adeo.no/graphql"
   }
 }
