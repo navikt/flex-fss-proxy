@@ -64,7 +64,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
-          RESOURCE: nais-dev.yaml
+          RESOURCE: nais/naiserator.yaml
+          VARS: nais/dev.json
 
   deploy-to-prod-fss:
     if: github.ref == 'refs/heads/master'
@@ -86,7 +87,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-fss
-          RESOURCE: nais-prod.yaml
+          RESOURCE: nais/naiserator.yaml
+          VARS: nais/prod.json
 
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'
