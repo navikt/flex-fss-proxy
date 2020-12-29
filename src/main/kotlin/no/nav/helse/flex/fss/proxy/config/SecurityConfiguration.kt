@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import no.nav.helse.flex.fss.proxy.log
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import no.nav.helse.flex.fss.proxy.log
 
 @EnableJwtTokenValidation
 @Configuration
@@ -18,11 +18,11 @@ class SecurityConfiguration(@Value("\${AZURE_APP_PRE_AUTHORIZED_APPS}") private 
     private val log = log()
 
     private val objectMapper = ObjectMapper()
-            .registerModule(JavaTimeModule())
-            .registerModule(KotlinModule())
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .registerModule(JavaTimeModule())
+        .registerModule(KotlinModule())
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    private val list: List<PreAuthorizedClient>;
+    private val list: List<PreAuthorizedClient>
 
     init {
         list = objectMapper.readValue(azureAppPreAuthorizedApps)

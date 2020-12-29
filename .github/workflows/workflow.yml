@@ -22,21 +22,27 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
       - name: Last opp VERSION til neste job
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: VERSION.txt
           path: VERSION.txt
-      - name: Restore .m2 cache
+      - name: Gradle wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+      - name: Setup gradle dependency cache
         uses: actions/cache@v2
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
-            ${{ runner.os }}-maven-
-      - name: Bygg og test
-        run: mvn --settings maven-settings.xml clean install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ${{ runner.os }}-gradle-
+      - name: Lint
+        run: ./gradlew ktlintCheck
+      - name: Test
+        run: ./gradlew test
+      - name: Bygg
+        run: ./gradlew bootJar
       - name: Build and publish Docker image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,7 +59,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Last ned versjon
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
@@ -76,7 +82,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Last ned versjon
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
@@ -97,7 +103,7 @@ jobs:
     needs: build-and-publish
     steps:
       - name: Last ned versjon
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .

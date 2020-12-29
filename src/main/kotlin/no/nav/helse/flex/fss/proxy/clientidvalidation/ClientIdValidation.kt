@@ -7,7 +7,6 @@ import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
-
 object ClientIdValidation {
 
     private val log = log()
@@ -20,7 +19,6 @@ object ClientIdValidation {
         if (clientIds.ikkeInneholder(azp)) {
             throw UkjentClientException("Ukjent client")
         }
-
     }
 
     private fun TokenValidationContextHolder.hentAzpClaim(): String {
@@ -42,4 +40,3 @@ class UkjentClientException : RuntimeException {
     constructor(msg: String) : super(msg)
     constructor(cause: Throwable) : super(cause)
 }
-
