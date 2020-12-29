@@ -22,9 +22,10 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
       - name: Last opp VERSION til neste job
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: VERSION.txt
+          path: VERSION.txt
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
       - name: Setup gradle dependency cache
@@ -58,7 +59,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Last ned versjon
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
@@ -81,7 +82,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Last ned versjon
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
@@ -102,7 +103,7 @@ jobs:
     needs: build-and-publish
     steps:
       - name: Last ned versjon
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
