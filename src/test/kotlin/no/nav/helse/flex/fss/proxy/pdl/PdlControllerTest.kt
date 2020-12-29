@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.web.context.WebApplicationContext
 
-
 @SpringBootTest(classes = [Application::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableMockOAuth2Server
 @AutoConfigureMockMvc
@@ -29,49 +28,54 @@ class PdlControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-
     @Test
     fun `ingen token returnerer 401`() {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/pdl/graphql")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized)
-                .andReturn()
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/pdl/graphql")
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(MockMvcResultMatchers.status().isUnauthorized)
+            .andReturn()
     }
 
     @Test
     fun `riktig token returnerer 200`() {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/pdl/graphql")
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/pdl/graphql")
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + token()))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+                .header("Authorization", "Bearer " + token())
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
     }
 
     @Test
     fun `feil client returnerer 403`() {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/pdl/graphql")
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/pdl/graphql")
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + token(clientId = "en-annen-client")))
-                .andExpect(MockMvcResultMatchers.status().isForbidden)
-                .andReturn()
+                .header("Authorization", "Bearer " + token(clientId = "en-annen-client"))
+        )
+            .andExpect(MockMvcResultMatchers.status().isForbidden)
+            .andReturn()
     }
 
     private fun token(
-            issuerId: String = "aad",
-            clientId: String = "gsak-client-id",
-            subject: String = "Samme det",
-            audience: String = "flex-fss-proxy"
+        issuerId: String = "aad",
+        clientId: String = "gsak-client-id",
+        subject: String = "Samme det",
+        audience: String = "flex-fss-proxy"
     ): String {
         return server.issueToken(
+            issuerId,
+            clientId,
+            DefaultOAuth2TokenCallback(
                 issuerId,
-                clientId,
-                DefaultOAuth2TokenCallback(
-                        issuerId,
-                        subject,
-                        audience,
-                        emptyMap(),
-                        3600
-                )
+                subject,
+                audience,
+                emptyMap(),
+                3600
+            )
         ).serialize()
     }
 }

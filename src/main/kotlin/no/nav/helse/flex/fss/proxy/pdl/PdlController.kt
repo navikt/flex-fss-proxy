@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
-
 @RestController
 @ProtectedWithClaims(issuer = ISSUER_AAD)
 class PdlController(
-        private val tokenValidationContextHolder: TokenValidationContextHolder,
-        private val allowedClientIds: List<PreAuthorizedClient>,
+    private val tokenValidationContextHolder: TokenValidationContextHolder,
+    private val allowedClientIds: List<PreAuthorizedClient>,
 ) {
 
     @PostMapping("/api/pdl/graphql", produces = [MediaType.APPLICATION_JSON_VALUE])
