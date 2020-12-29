@@ -38,7 +38,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Lint
-        run: ./gradlew lint
+        run: ./gradlew ktlintCheck
       - name: Test
         run: ./gradlew test
       - name: Bygg
