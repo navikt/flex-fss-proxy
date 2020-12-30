@@ -1,4 +1,5 @@
 AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:flex-reisetilskudd-gsak\",\"clientId\":\"gsak-client-id\"}]"
+pdl.url: http://pdl
 
 logging.config: "classpath:logback-local.xml"
 
@@ -10,7 +11,7 @@ no.nav.security.jwt:
   client:
     registration:
       rest-sts:
-        token-endpoint-url: "URL"
+        token-endpoint-url: http://localhost:${mock-oauth2-server.port}/sts/token
         grant-type: client_credentials
         authentication:
           client-id: "USER"
