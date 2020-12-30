@@ -7,6 +7,7 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.http.MediaType
 import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
@@ -38,7 +39,9 @@ class PdlController(
 
         val nyeHeaders = HttpHeaders()
         headers.forEach {
-            nyeHeaders.set(it.key, it.value)
+            if (it.key != AUTHORIZATION) {
+                nyeHeaders.set(it.key, it.value)
+            }
         }
 
         val forward: RequestEntity<Any> = RequestEntity(
