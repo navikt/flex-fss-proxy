@@ -36,6 +36,9 @@ repositories {
     }
 }
 
+val tokenSupportVersion = "1.3.1"
+val logstashEncoderVersion = "4.10"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -43,14 +46,15 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("no.nav.security:token-validation-spring:1.3.1")
+    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
+    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
     implementation("org.slf4j:slf4j-api")
     implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.springframework.boot:spring-boot-starter-logging")
-    implementation("net.logstash.logback:logstash-logback-encoder:4.10")
+    implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    testImplementation("no.nav.security:token-validation-spring-test:1.3.1")
+    testImplementation("no.nav.security:token-validation-spring-test:$tokenSupportVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.hamcrest:hamcrest-library")

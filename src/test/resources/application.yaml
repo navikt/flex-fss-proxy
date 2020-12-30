@@ -7,3 +7,12 @@ no.nav.security.jwt:
     aad:
       discoveryurl: http://localhost:${mock-oauth2-server.port}/aad/.well-known/openid-configuration
       accepted_audience: flex-fss-proxy
+  client:
+    registration:
+      rest-sts:
+        token-endpoint-url: "URL"
+        grant-type: client_credentials
+        authentication:
+          client-id: "USER"
+          client-secret: "PWD"
+          client-auth-method: client_secret_basic

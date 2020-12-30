@@ -1,15 +1,24 @@
 server:
-    port: 8080
+  port: 8080
 
-spring :
-    main.banner-mode: 'off'
-    profiles:
-        active: default
+spring:
+  main.banner-mode: 'off'
+  profiles:
+    active: default
 
 logging.config: "classpath:logback.xml"
 
 no.nav.security.jwt:
-    issuer:
-        aad:
-            discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
-            accepted_audience: ${AZURE_APP_CLIENT_ID}
+  issuer:
+    aad:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
+  client:
+    registration:
+      rest-sts:
+        token-endpoint-url: ${SECURITY_TOKEN_SERVICE_TOKEN_URL}
+        grant-type: client_credentials
+        authentication:
+          client-id: ${SERVICEUSER_USERNAME}
+          client-secret: ${SERVICEUSER_PASSWORD}
+          client-auth-method: client_secret_basic
