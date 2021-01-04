@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate
 @EnableOAuth2Client(cacheEnabled = true)
 @Configuration
 @Profile("default")
-class StsRestTemplateConfiguration {
+class PdlRestTemplateConfiguration {
 
     @Bean
     fun stsRestTemplate(
@@ -53,6 +53,7 @@ class StsRestTemplateConfiguration {
         return ClientHttpRequestInterceptor { request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution ->
             val response = oAuth2AccessTokenService.getAccessToken(clientProperties)
             request.headers.setBearerAuth(response.accessToken)
+            request.headers.set("Nav-Consumer-Token", "Bearer ${response.accessToken}")
             execution.execute(request, body)
         }
     }
