@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse
 class PdlController(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     private val allowedClientIds: List<PreAuthorizedClient>,
-    private val stsRestTemplate: RestTemplate,
+    private val pdlRestTemplate: RestTemplate,
     @Value("\${pdl.url}") private val pdlUrl: String,
 ) {
 
@@ -51,7 +51,7 @@ class PdlController(
             URI(pdlUrl)
         )
 
-        val responseEntity: ResponseEntity<Any> = stsRestTemplate.exchange(forward)
+        val responseEntity: ResponseEntity<Any> = pdlRestTemplate.exchange(forward)
 
         val newHeaders: MultiValueMap<String, String> = LinkedMultiValueMap()
         responseEntity.headers.contentType?.let {

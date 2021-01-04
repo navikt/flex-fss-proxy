@@ -39,13 +39,13 @@ class PdlControllerTest {
     private lateinit var mockMvc: MockMvc
 
     @Autowired
-    private lateinit var stsRestTemplate: RestTemplate
+    private lateinit var pdlRestTemplate: RestTemplate
 
     private lateinit var mockServer: MockRestServiceServer
 
     @BeforeEach
     fun init() {
-        mockServer = MockRestServiceServer.createServer(stsRestTemplate)
+        mockServer = MockRestServiceServer.createServer(pdlRestTemplate)
     }
 
     @Test

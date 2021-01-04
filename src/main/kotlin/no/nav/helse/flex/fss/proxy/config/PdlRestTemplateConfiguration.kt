@@ -21,24 +21,13 @@ import org.springframework.web.client.RestTemplate
 class PdlRestTemplateConfiguration {
 
     @Bean
-    fun stsRestTemplate(
+    fun pdlRestTemplate(
         restTemplateBuilder: RestTemplateBuilder,
         clientConfigurationProperties: ClientConfigurationProperties,
         oAuth2AccessTokenService: OAuth2AccessTokenService
-    ): RestTemplate =
-        downstreamRestTemplate(
-            registrationName = "rest-sts",
-            restTemplateBuilder = restTemplateBuilder,
-            clientConfigurationProperties = clientConfigurationProperties,
-            oAuth2AccessTokenService = oAuth2AccessTokenService,
-        )
-
-    private fun downstreamRestTemplate(
-        restTemplateBuilder: RestTemplateBuilder,
-        clientConfigurationProperties: ClientConfigurationProperties,
-        oAuth2AccessTokenService: OAuth2AccessTokenService,
-        registrationName: String
     ): RestTemplate {
+        val registrationName = "rest-sts"
+
         val clientProperties = clientConfigurationProperties.registration[registrationName]
             ?: throw RuntimeException("Fant ikke config for $registrationName")
         return restTemplateBuilder
