@@ -1,5 +1,5 @@
-echo "Bygger flex-reisetilskudd-gsak latest"
+echo "Bygger flex-fss-proxy latest"
 
 ./gradlew bootJar
 
-docker build . -t flex-reisetilskudd-gsak:latest
+docker build . -t flex-fss-proxy:latest
