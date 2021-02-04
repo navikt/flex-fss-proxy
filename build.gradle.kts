@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.3.5.RELEASE"
+    id("org.springframework.boot") version "2.4.2"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.4.21-2"
     kotlin("plugin.spring") version "1.4.21-2"
@@ -21,7 +21,8 @@ buildscript {
     }
 }
 
-ext["okhttp3.version"] = "4.9.0"
+ext["nimbus-jose-jwt.version"] = "8.20" // https://nav-it.slack.com/archives/C01381BAT62/p1611056940004800
+ext["okhttp3.version"] = "4.9.0" // For at token support testen kjører (tror jeg)
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
