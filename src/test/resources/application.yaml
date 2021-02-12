@@ -1,7 +1,13 @@
 AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:flex-reisetilskudd-gsak\",\"clientId\":\"gsak-client-id\"}]"
 pdl.url: http://pdl
+syketilfelle.url: http://syketilfelle
+security-token-service-token.url: http://sts
 
 logging.config: "classpath:logback-local.xml"
+
+serviceuser:
+  username: "uname"
+  password: "pass"
 
 no.nav.security.jwt:
   issuer:

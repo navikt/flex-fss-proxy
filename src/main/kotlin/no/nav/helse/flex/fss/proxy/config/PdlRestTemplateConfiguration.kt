@@ -35,6 +35,21 @@ class PdlRestTemplateConfiguration {
             .build()
     }
 
+    @Bean
+    fun syketilfelleRestTemplate(
+        restTemplateBuilder: RestTemplateBuilder,
+        clientConfigurationProperties: ClientConfigurationProperties,
+        oAuth2AccessTokenService: OAuth2AccessTokenService
+    ): RestTemplate {
+        val registrationName = "rest-sts"
+
+        val clientProperties = clientConfigurationProperties.registration[registrationName]
+            ?: throw RuntimeException("Fant ikke config for $registrationName")
+        return restTemplateBuilder
+            .additionalInterceptors(bearerTokenInterceptor(clientProperties, oAuth2AccessTokenService))
+            .build()
+    }
+
     private fun bearerTokenInterceptor(
         clientProperties: ClientProperties,
         oAuth2AccessTokenService: OAuth2AccessTokenService
