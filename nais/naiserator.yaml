@@ -38,6 +38,9 @@ spec:
         - application: flex-reisetilskudd-gsak
           namespace: flex
           cluster: {{environment}}-gcp
+        - application: flex-reisetilskudd-backend
+          namespace: flex
+          cluster: {{environment}}-gcp
   azure:
     application:
       enabled: true
