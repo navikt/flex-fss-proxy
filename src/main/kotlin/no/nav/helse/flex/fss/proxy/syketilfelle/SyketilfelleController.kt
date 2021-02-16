@@ -3,23 +3,25 @@ package no.nav.helse.flex.fss.proxy.syketilfelle
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.validateClientId
 import no.nav.helse.flex.fss.proxy.config.ISSUER_AAD
 import no.nav.helse.flex.fss.proxy.config.PreAuthorizedClient
-import no.nav.helse.flex.fss.proxy.log
 import no.nav.helse.flex.fss.proxy.token.TokenConsumer
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.http.RequestEntity
+import org.springframework.http.ResponseEntity
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.exchange
 import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.http.HttpServletResponse
 
@@ -32,18 +34,16 @@ class SyketilfelleController(
     private val tokenConsumer: TokenConsumer,
     @Value("\${syketilfelle.url}") private val syketilfelleUrl: String,
 ) {
-    private val log = log()
 
     @PostMapping(
-        value = ["reisetilskudd/{aktorId}/{sykmeldingId}/erUtenforVentetid"],
+        value = ["reisetilskudd/{aktorId}/oppfolgingstilfelle"],
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun erUtenforVentetid(
+    fun oppfolgingstilfelle(
         requestEntity: RequestEntity<Any>,
-        @PathVariable aktorId: String,
-        @PathVariable sykmeldingId: String
-    ): Boolean {
+        @PathVariable aktorId: String
+    ): ResponseEntity<Any> {
         Pair(tokenValidationContextHolder, allowedClientIds).validateClientId()
 
         val headers = requestEntity.headers.toSingleValueMap()
@@ -58,23 +58,23 @@ class SyketilfelleController(
 
         val queryBuilder = UriComponentsBuilder
             .fromHttpUrl(syketilfelleUrl)
-            .pathSegment("reisetilskudd", aktorId, sykmeldingId, "erUtenforVentetid")
+            .pathSegment("reisetilskudd", aktorId, "oppfolgingstilfelle")
 
-        val result = syketilfelleRestTemplate
-            .exchange(
-                queryBuilder.toUriString(),
-                HttpMethod.POST,
-                HttpEntity(requestEntity.body, nyeHeaders),
-                Boolean::class.java
-            )
+        val forward: RequestEntity<Any> = RequestEntity(
+            requestEntity.body,
+            nyeHeaders,
+            HttpMethod.POST,
+            queryBuilder.build().toUri()
+        )
 
-        if (!result.statusCode.is2xxSuccessful) {
-            val message = "Kall mot syfosyketilfelle feiler med HTTP-${result.statusCode}"
-            log.error(message)
-            throw RuntimeException(message)
+        val responseEntity: ResponseEntity<Any> = syketilfelleRestTemplate.exchange(forward)
+
+        val newHeaders: MultiValueMap<String, String> = LinkedMultiValueMap()
+        responseEntity.headers.contentType?.let {
+            newHeaders.set("Content-type", it.toString())
         }
 
-        return result.body ?: throw RuntimeException("Ingen data returnert fra syfosyketilfelle i erUtenforVentetid")
+        return responseEntity
     }
 
     @ExceptionHandler(HttpStatusCodeException::class)
