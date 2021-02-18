@@ -7,6 +7,7 @@
   "ingress": "https://flex-fss-proxy.dev-fss-pub.nais.io",
   "env": {
     "PDL_URL": "https://pdl-api.nais.preprod.local/graphql",
+    "SYKETILFELLE_URL": "https://syfosyketilfelle.nais.preprod.local",
     "SECURITY_TOKEN_SERVICE_TOKEN_URL": "https://security-token-service.nais.preprod.local/rest/v1/sts/token"
   }
 }
