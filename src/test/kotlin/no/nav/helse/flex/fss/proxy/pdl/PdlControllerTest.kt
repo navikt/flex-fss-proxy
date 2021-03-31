@@ -96,7 +96,7 @@ class PdlControllerTest {
         issuerId: String = "aad",
         clientId: String = "gsak-client-id",
         subject: String = "Samme det",
-        audience: String = "flex-fss-proxy"
+        audience: List<String> = listOf("flex-fss-proxy")
     ): String {
         return server.issueToken(
             issuerId,
