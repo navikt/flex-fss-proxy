@@ -35,12 +35,10 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: flex-reisetilskudd-gsak
+        - application: syfosoknad-kafka-replikerer
           namespace: flex
           cluster: {{environment}}-gcp
-        - application: flex-reisetilskudd-backend
-          namespace: flex
-          cluster: {{environment}}-gcp
+
   azure:
     application:
       enabled: true
