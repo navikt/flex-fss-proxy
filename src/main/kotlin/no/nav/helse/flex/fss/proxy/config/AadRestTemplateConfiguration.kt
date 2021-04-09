@@ -16,16 +16,27 @@ import org.springframework.web.client.RestTemplate
 @EnableJwtTokenValidation
 @EnableOAuth2Client(cacheEnabled = true)
 @Configuration
-class PdlRestTemplateConfiguration {
+class AadRestTemplateConfiguration {
 
     @Bean
-    fun pdlRestTemplate(
+    fun syfosoknadRestTemplate(
         restTemplateBuilder: RestTemplateBuilder,
         clientConfigurationProperties: ClientConfigurationProperties,
         oAuth2AccessTokenService: OAuth2AccessTokenService
-    ): RestTemplate {
-        val registrationName = "rest-sts"
+    ): RestTemplate =
+        downstreamRestTemplate(
+            registrationName = "syfosoknad-client-credentials",
+            restTemplateBuilder = restTemplateBuilder,
+            clientConfigurationProperties = clientConfigurationProperties,
+            oAuth2AccessTokenService = oAuth2AccessTokenService,
+        )
 
+    private fun downstreamRestTemplate(
+        restTemplateBuilder: RestTemplateBuilder,
+        clientConfigurationProperties: ClientConfigurationProperties,
+        oAuth2AccessTokenService: OAuth2AccessTokenService,
+        registrationName: String
+    ): RestTemplate {
         val clientProperties = clientConfigurationProperties.registration[registrationName]
             ?: throw RuntimeException("Fant ikke config for $registrationName")
         return restTemplateBuilder
@@ -40,7 +51,6 @@ class PdlRestTemplateConfiguration {
         return ClientHttpRequestInterceptor { request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution ->
             val response = oAuth2AccessTokenService.getAccessToken(clientProperties)
             request.headers.setBearerAuth(response.accessToken)
-            request.headers.set("Nav-Consumer-Token", "Bearer ${response.accessToken}")
             execution.execute(request, body)
         }
     }

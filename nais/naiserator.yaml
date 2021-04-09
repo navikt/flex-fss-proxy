@@ -38,6 +38,9 @@ spec:
         - application: syfosoknad-kafka-replikerer
           namespace: flex
           cluster: {{environment}}-gcp
+        - application: sykepengesoknad-korrigering-metrikk
+          namespace: flex
+          cluster: {{environment}}-gcp
 
   azure:
     application:

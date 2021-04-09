@@ -13,11 +13,9 @@ class RestTemplateConfig {
     fun basicAuthRestTemplate(
         @Value("\${serviceuser.username}") username: String,
         @Value("\${serviceuser.password}") password: String,
-        callIdInterceptor: CallIdInterceptor
     ): RestTemplate {
         return RestTemplateBuilder()
             .basicAuthentication(username, password)
-            .additionalInterceptors(callIdInterceptor)
             .build()
     }
 }

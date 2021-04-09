@@ -1,39 +1,40 @@
-package no.nav.helse.flex.fss.proxy.pdl
+package no.nav.helse.flex.fss.proxy.syfosoknad
 
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.NamespaceAndApp
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpHeaders.AUTHORIZATION
-import org.springframework.http.MediaType
-import org.springframework.http.RequestEntity
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
-import java.net.URI
+import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.http.HttpServletResponse
 
 @RestController
 @ProtectedWithClaims(issuer = ISSUER_AAD)
-class PdlController(
+class SyfosoknadController(
     private val clientIdValidation: ClientIdValidation,
-    private val pdlRestTemplate: RestTemplate,
-    @Value("\${pdl.url}") private val pdlUrl: String,
+    private val syfosoknadRestTemplate: RestTemplate,
+    @Value("\${syfosoknad.url}") private val syfosoknadUrl: String,
 ) {
 
-    @PostMapping("/api/pdl/graphql", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun graphQl(requestEntity: RequestEntity<Any>): ResponseEntity<Any> {
+    @GetMapping(
+        value = ["/syfosoknad/api/v3/soknader/{id}/kafkaformat"],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun soknadKafkaformatV3(
+        requestEntity: RequestEntity<Any>,
+        @PathVariable id: String
+    ): ResponseEntity<Any> {
+
         clientIdValidation.validateClientId(
             listOf(
-                NamespaceAndApp(namespace = "flex", app = "syfosoknad-kafka-replikerer")
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-korrigering-metrikk")
             )
         )
 
@@ -41,19 +42,23 @@ class PdlController(
 
         val nyeHeaders = HttpHeaders()
         headers.forEach {
-            if (it.key != AUTHORIZATION) {
+            if (it.key != HttpHeaders.AUTHORIZATION) {
                 nyeHeaders.set(it.key, it.value)
             }
         }
 
+        val queryBuilder = UriComponentsBuilder
+            .fromHttpUrl(syfosoknadUrl)
+            .pathSegment("api", "v3", "soknader", id, "kafkaformat")
+
         val forward: RequestEntity<Any> = RequestEntity(
             requestEntity.body,
             nyeHeaders,
-            requestEntity.method,
-            URI(pdlUrl)
+            HttpMethod.GET,
+            queryBuilder.build().toUri()
         )
 
-        val responseEntity: ResponseEntity<Any> = pdlRestTemplate.exchange(forward)
+        val responseEntity: ResponseEntity<Any> = syfosoknadRestTemplate.exchange(forward)
 
         val newHeaders: MultiValueMap<String, String> = LinkedMultiValueMap()
         responseEntity.headers.contentType?.let {
