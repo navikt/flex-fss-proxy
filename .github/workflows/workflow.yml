@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
+          distribution: 'zulu'
           java-version: '14'
       - name: Checkout code
         uses: actions/checkout@v1
@@ -29,7 +30,7 @@ jobs:
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
       - name: Setup gradle dependency cache
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
@@ -44,6 +45,7 @@ jobs:
       - name: Bygg
         run: ./gradlew bootJar
       - name: Build and publish Docker image
+        if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
