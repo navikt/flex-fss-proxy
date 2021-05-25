@@ -1,6 +1,7 @@
 AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:syfosoknad-kafka-replikerer\",\"clientId\":\"syfosoknad-kafka-replikerer-client-id\"}]"
 pdl.url: http://pdl
 syfosoknad.url: http://syfosoknad
+syfoservicestrangler.url: http://syfoservicestrangler.default
 security-token-service-token.url: http://sts
 
 logging.config: "classpath:logback-local.xml"
