@@ -12,10 +12,10 @@ import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestTemplate
 
 @Configuration
-class PdlRestTemplateConfiguration {
+class SyfoservicestranglerRestTemplateConfiguration {
 
     @Bean
-    fun pdlRestTemplate(
+    fun syfoserviceStranglerRestTemplate(
         restTemplateBuilder: RestTemplateBuilder,
         clientConfigurationProperties: ClientConfigurationProperties,
         oAuth2AccessTokenService: OAuth2AccessTokenService
@@ -36,7 +36,6 @@ class PdlRestTemplateConfiguration {
         return ClientHttpRequestInterceptor { request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution ->
             val response = oAuth2AccessTokenService.getAccessToken(clientProperties)
             request.headers.setBearerAuth(response.accessToken)
-            request.headers.set("Nav-Consumer-Token", "Bearer ${response.accessToken}")
             execution.execute(request, body)
         }
     }
