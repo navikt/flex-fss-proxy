@@ -41,9 +41,6 @@ spec:
         - application: sykepengesoknad-korrigering-metrikk
           namespace: flex
           cluster: {{environment}}-gcp
-        - application: sykepengesoknad-narmesteleder-varsler
-          namespace: flex
-          cluster: {{environment}}-gcp
 
   azure:
     application:
