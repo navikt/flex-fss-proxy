@@ -3,6 +3,7 @@ package no.nav.helse.flex.fss.proxy.syfoservicestrangler
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.NamespaceAndApp
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
+import no.nav.helse.flex.fss.proxy.logger
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
@@ -24,17 +25,24 @@ class SyfoservicestranglerController(
     @Value("\${syfoservicestrangler.url}") private val syfoservicsstranglerUrl: String,
 ) {
 
+    private val log = logger()
+
     @PostMapping(
         "/api/syfoservicestrangler/brukeroppgave/soknad",
         produces = [MediaType.APPLICATION_JSON_VALUE],
         consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun opprettOppgave(@RequestBody req: OpprettHendelseRequest): ResponseEntity<Any> {
+
+        log.info("request før clientIdValidation OK")
+
         clientIdValidation.validateClientId(
             listOf(
                 NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-narmesteleder-varsler")
             )
         )
+
+        log.info("request etter clientIdValidation OK")
 
         val forward: RequestEntity<Any> = RequestEntity(
             req,
