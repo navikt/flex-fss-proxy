@@ -94,7 +94,7 @@ class PdlControllerTest {
 
     private fun token(
         issuerId: String = "aad",
-        clientId: String = "syfosoknad-kafka-replikerer-client-id",
+        clientId: String = "sykepengesoknad-narmesteleder-varsler-client-id",
         subject: String = "Samme det",
         audience: List<String> = listOf("flex-fss-proxy")
     ): String {
