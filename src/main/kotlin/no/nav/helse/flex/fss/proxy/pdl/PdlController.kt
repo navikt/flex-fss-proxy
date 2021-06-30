@@ -33,7 +33,7 @@ class PdlController(
     fun graphQl(requestEntity: RequestEntity<Any>): ResponseEntity<Any> {
         clientIdValidation.validateClientId(
             listOf(
-                NamespaceAndApp(namespace = "flex", app = "syfosoknad-kafka-replikerer")
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-narmesteleder-varsler")
             )
         )
 

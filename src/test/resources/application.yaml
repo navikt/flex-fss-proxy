@@ -1,4 +1,4 @@
-AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:syfosoknad-kafka-replikerer\",\"clientId\":\"syfosoknad-kafka-replikerer-client-id\"}]"
+AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:sykepengesoknad-narmesteleder-varsler\",\"clientId\":\"sykepengesoknad-narmesteleder-varsler-client-id\"}]"
 pdl.url: http://pdl
 syfosoknad.url: http://syfosoknad
 syfoservicestrangler.url: http://syfoservicestrangler.default
