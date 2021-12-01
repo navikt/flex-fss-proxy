@@ -28,5 +28,5 @@ inline fun <reified T> T.logger(): Logger {
 
 val OBJECT_MAPPER = ObjectMapper()
     .registerModule(JavaTimeModule())
-    .registerModule(KotlinModule())
+    .registerModule(KotlinModule.Builder().build())
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
