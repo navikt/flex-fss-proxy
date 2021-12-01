@@ -37,7 +37,7 @@ repositories {
 }
 
 val tokenSupportVersion = "1.3.9"
-val logstashEncoderVersion = "6.6"
+val logstashEncoderVersion = "7.0.1"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
