@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.5.4"
+    id("org.springframework.boot") version "2.6.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("plugin.spring") version "1.5.21"
-    kotlin("jvm") version "1.5.21"
+    kotlin("plugin.spring") version "1.6.0"
+    kotlin("jvm") version "1.6.0"
 }
 
 group = "no.nav.helse.flex"
@@ -17,7 +17,7 @@ buildscript {
         maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:10.1.0")
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
     }
 }
 
@@ -36,7 +36,7 @@ repositories {
     }
 }
 
-val tokenSupportVersion = "1.3.8"
+val tokenSupportVersion = "1.3.9"
 val logstashEncoderVersion = "6.6"
 
 dependencies {
@@ -70,7 +70,7 @@ tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "16"
+        jvmTarget = "17"
     }
 }
 tasks.withType<Test> {
