@@ -3,6 +3,7 @@ pdl.url: http://pdl
 syfosoknad.url: http://syfosoknad
 syfoservicestrangler.url: http://syfoservicestrangler.default
 security-token-service-token.url: http://sts
+modiacontextholder.url: http://modiacontexthodler
 
 logging.config: "classpath:logback-local.xml"
 
