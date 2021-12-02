@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
-import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.http.HttpServletResponse
 
 @RestController
@@ -27,34 +26,22 @@ class ModiacontextController(
         requestEntity: RequestEntity<Any>,
     ): ResponseEntity<Any> {
         log.info("OK, jeg er inne i aktiv bruker")
-        val headers = requestEntity.headers.toSingleValueMap()
+        val headersInn = requestEntity.headers.toSingleValueMap()
 
-        val nyeHeaders = HttpHeaders()
-        headers.forEach {
-            if (it.key == HttpHeaders.COOKIE) {
-                nyeHeaders.set(it.key, it.value)
-            }
-            if (it.key == "XAuthorization") {
-                nyeHeaders.set(HttpHeaders.AUTHORIZATION, it.value)
-            }
-        }
+        val headers = HttpHeaders()
+        headers[HttpHeaders.COOKIE] = headersInn[HttpHeaders.COOKIE]
+        headers[HttpHeaders.AUTHORIZATION] = headersInn["XAuthorization"]
 
-        val queryBuilder =
-            UriComponentsBuilder.fromHttpUrl("$modiaContextHolderUrl/modiacontextholder/api/context/aktivbruker")
+        log.info("Proxyer med headere: $headers")
+        val req = HttpEntity<Void>(headers)
 
-        val forward: RequestEntity<Any> = RequestEntity(
-            requestEntity.body,
-            nyeHeaders,
-            HttpMethod.GET,
-            queryBuilder.build().toUri()
-        )
-
-        return plainRestTemplate.exchange(forward)
+        return plainRestTemplate.exchange("$modiaContextHolderUrl/modiacontextholder/api/context/aktivbruker", HttpMethod.GET, req)
     }
 
     @ExceptionHandler(HttpStatusCodeException::class)
     fun handleHttpStatusCodeException(response: HttpServletResponse, e: HttpStatusCodeException) {
-        log.warn("Au, jeg er inne i errorhandlern!")
+
+        log.warn("Au, jeg er inne i errorhandlern! " + e.rawStatusCode, e)
 
         response.status = e.rawStatusCode
         if (e.responseHeaders != null) {
