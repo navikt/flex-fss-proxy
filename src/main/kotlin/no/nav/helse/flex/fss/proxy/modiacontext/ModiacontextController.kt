@@ -2,7 +2,6 @@ package no.nav.helse.flex.fss.proxy.modiacontext
 
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
-import no.nav.helse.flex.fss.proxy.logger
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
@@ -19,8 +18,6 @@ class ModiacontextController(
     private val clientIdValidation: ClientIdValidation,
     @Value("\${modiacontextholder.url}") private val modiaContextHolderUrl: String,
 ) {
-    val log = logger()
-
     @GetMapping(
         value = ["/modiacontextholder/api/context/aktivbruker"],
         produces = [MediaType.APPLICATION_JSON_VALUE]

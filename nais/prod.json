@@ -6,7 +6,6 @@
   "environment": "prod",
   "ingress": "https://flex-fss-proxy.prod-fss-pub.nais.io",
   "env": {
-    "PDL_URL": "https://pdl-api.nais.adeo.no/graphql",
     "SECURITY_TOKEN_SERVICE_TOKEN_URL": "https://security-token-service.nais.adeo.no/rest/v1/sts/token",
     "SYFOSOKNAD_URL": "http://syfosoknad",
     "SYFOSOKNAD_AAD_CLIENT_ID": "prod-fss.flex.syfosoknad",
