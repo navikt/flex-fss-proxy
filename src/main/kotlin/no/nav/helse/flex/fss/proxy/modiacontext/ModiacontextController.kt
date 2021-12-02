@@ -29,8 +29,11 @@ class ModiacontextController(
 
         val nyeHeaders = HttpHeaders()
         headers.forEach {
-            if (it.key == HttpHeaders.AUTHORIZATION || it.key == HttpHeaders.COOKIE) {
+            if (it.key == HttpHeaders.COOKIE) {
                 nyeHeaders.set(it.key, it.value)
+            }
+            if (it.key == "XAuthorization") {
+                nyeHeaders.set(HttpHeaders.AUTHORIZATION, it.value)
             }
         }
 
