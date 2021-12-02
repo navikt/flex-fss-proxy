@@ -41,7 +41,9 @@ spec:
         - application: sykepengesoknad-narmesteleder-varsler
           namespace: flex
           cluster: {{environment}}-gcp
-
+        - application: spinnsyn-frontend-interne
+          namespace: flex
+          cluster: {{environment}}-gcp
   azure:
     application:
       enabled: true

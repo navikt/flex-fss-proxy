@@ -25,7 +25,7 @@ class ModiacontextController(
     fun aktivBruker(
         requestEntity: RequestEntity<Any>,
     ): ResponseEntity<Any> {
-        log.info("Headere inn: ${requestEntity.headers}")
+        log.info("Jeg ble kalt")
 
         val headersInn = requestEntity.headers.toSingleValueMap()
 
