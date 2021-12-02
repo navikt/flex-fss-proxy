@@ -25,12 +25,13 @@ class ModiacontextController(
     fun aktivBruker(
         requestEntity: RequestEntity<Any>,
     ): ResponseEntity<Any> {
-        log.info("OK, jeg er inne i aktiv bruker")
+        log.info("Headere inn: ${requestEntity.headers}")
+
         val headersInn = requestEntity.headers.toSingleValueMap()
 
         val headers = HttpHeaders()
-        headers[HttpHeaders.COOKIE] = headersInn[HttpHeaders.COOKIE]
-        headers[HttpHeaders.AUTHORIZATION] = headersInn["XAuthorization"]
+        headers[HttpHeaders.COOKIE] = headersInn["cookie"]
+        headers[HttpHeaders.AUTHORIZATION] = headersInn["xauthorization"]
 
         log.info("Proxyer med headere: $headers")
         val req = HttpEntity<Void>(headers)
