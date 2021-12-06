@@ -1,8 +1,8 @@
-AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:sykepengesoknad-narmesteleder-varsler\",\"clientId\":\"sykepengesoknad-narmesteleder-varsler-client-id\"}]"
-pdl.url: http://pdl
+AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:sykepengesoknad-narmesteleder-varsler\",\"clientId\":\"sykepengesoknad-narmesteleder-varsler-client-id\"},{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"}]"
 syfosoknad.url: http://syfosoknad
 syfoservicestrangler.url: http://syfoservicestrangler.default
 security-token-service-token.url: http://sts
+modiacontextholder.url: http://modiacontexthodler
 
 logging.config: "classpath:logback-local.xml"
 
