@@ -9,6 +9,7 @@
     "SECURITY_TOKEN_SERVICE_TOKEN_URL": "https://security-token-service.nais.preprod.local/rest/v1/sts/token",
     "SYFOSOKNAD_URL": "http://syfosoknad",
     "SYFOSOKNAD_AAD_CLIENT_ID": "dev-fss.flex.syfosoknad",
-    "MODIACONTEXTHOLDER_URL": "https://modiacontextholder-q0.dev.intern.nav.no"
+    "MODIACONTEXTHOLDER_URL": "https://modiacontextholder-q0.dev.intern.nav.no",
+    "KODEVERK_URL": "https://kodeverk.dev.adeo.no"
   }
 }
