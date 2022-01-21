@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.1"
+    id("org.springframework.boot") version "2.6.3"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("plugin.spring") version "1.6.0"
     kotlin("jvm") version "1.6.0"
@@ -36,7 +36,7 @@ repositories {
     }
 }
 
-val tokenSupportVersion = "1.3.9"
+val tokenSupportVersion = "1.3.10"
 val logstashEncoderVersion = "7.0.1"
 
 dependencies {
