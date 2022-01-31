@@ -3,6 +3,7 @@ syfosoknad.url: http://syfosoknad
 syfoservicestrangler.url: http://syfoservicestrangler.default
 security-token-service-token.url: http://sts
 modiacontextholder.url: http://modiacontexthodler
+kodeverk.url: http://fkv
 
 logging.config: "classpath:logback-local.xml"
 
