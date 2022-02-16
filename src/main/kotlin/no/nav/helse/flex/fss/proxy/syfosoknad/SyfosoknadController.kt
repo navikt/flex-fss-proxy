@@ -34,7 +34,8 @@ class SyfosoknadController(
 
         clientIdValidation.validateClientId(
             listOf(
-                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-korrigering-metrikk")
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-korrigering-metrikk"),
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-arkivering-oppgave")
             )
         )
 
