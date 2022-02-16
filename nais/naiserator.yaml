@@ -47,6 +47,9 @@ spec:
         - application: flex-joark-mottak
           namespace: flex
           cluster: {{environment}}-gcp
+        - application: sykepengesoknad-arkivering-oppgave
+          namespace: flex
+          cluster: {{environment}}-gcp
   azure:
     application:
       enabled: true
