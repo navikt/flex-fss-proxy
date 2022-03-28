@@ -110,11 +110,10 @@ class ModiacontextControllerTest {
             issuerId,
             clientId,
             DefaultOAuth2TokenCallback(
-                issuerId,
-                subject,
-                audience,
-                emptyMap(),
-                3600
+                issuerId = issuerId,
+                subject = subject,
+                audience = audience,
+                expiry = 3600
             )
         ).serialize()
     }
