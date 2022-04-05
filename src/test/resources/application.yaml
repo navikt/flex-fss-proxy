@@ -1,15 +1,9 @@
-AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:sykepengesoknad-narmesteleder-varsler\",\"clientId\":\"sykepengesoknad-narmesteleder-varsler-client-id\"},{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"}]"
+AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"}]"
 syfosoknad.url: http://syfosoknad
-syfoservicestrangler.url: http://syfoservicestrangler.default
-security-token-service-token.url: http://sts
 modiacontextholder.url: http://modiacontexthodler
 kodeverk.url: http://fkv
 
 logging.config: "classpath:logback-local.xml"
-
-serviceuser:
-  username: "uname"
-  password: "pass"
 
 no.nav.security.jwt:
   issuer:

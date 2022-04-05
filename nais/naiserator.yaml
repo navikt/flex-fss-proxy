@@ -38,9 +38,6 @@ spec:
         - application: sykepengesoknad-korrigering-metrikk
           namespace: flex
           cluster: {{environment}}-gcp
-        - application: sykepengesoknad-narmesteleder-varsler
-          namespace: flex
-          cluster: {{environment}}-gcp
         - application: spinnsyn-frontend-interne
           namespace: flex
           cluster: {{environment}}-gcp
@@ -54,8 +51,6 @@ spec:
     application:
       enabled: true
       tenant: {{azureTenant}}
-  envFrom:
-    - secret: flex-fss-proxy-serviceuser
   env:
   {{#each env}}
      - name: {{@key}}
