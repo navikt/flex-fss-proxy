@@ -114,7 +114,7 @@ jobs:
           path: .
       - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
       - run: echo "IMAGE=ghcr.io/navikt/$APP:$VERSION" >> $GITHUB_ENV
-      - run: echo "LATEST=ghcr.io/navikt/APP:latest" >> $GITHUB_ENV
+      - run: echo "LATEST=ghcr.io/navikt/$APP:latest" >> $GITHUB_ENV
       - name: Tag and push docker image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
