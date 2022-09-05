@@ -1,0 +1,9 @@
+app: flex-fss-proxy
+namespace: flex
+team: flex
+azureTenant: trygdeetaten.no
+environment: dev
+ingress: https://flex-fss-proxy.dev-fss-pub.nais.io
+env:
+  MODIACONTEXTHOLDER_URL: https://modiacontextholder-q0.dev.intern.nav.no
+  KODEVERK_URL: https://kodeverk.dev.adeo.no
