@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "2.7.1"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("io.spring.dependency-management") version "1.0.14.RELEASE"
     kotlin("plugin.spring") version "1.7.0"
     kotlin("jvm") version "1.7.0"
 }
@@ -36,7 +36,7 @@ repositories {
     }
 }
 
-val tokenSupportVersion = "2.1.1"
+val tokenSupportVersion = "2.1.4"
 val logstashEncoderVersion = "7.2"
 
 dependencies {
