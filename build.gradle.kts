@@ -10,7 +10,7 @@ plugins {
 group = "no.nav.helse.flex"
 version = "1.0"
 description = "flex-fss-proxy"
-java.sourceCompatibility = JavaVersion.VERSION_14
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 buildscript {
     repositories {
