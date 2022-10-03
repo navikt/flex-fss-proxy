@@ -36,7 +36,7 @@ repositories {
     }
 }
 
-val tokenSupportVersion = "2.1.4"
+val tokenSupportVersion = "2.1.6"
 val logstashEncoderVersion = "7.2"
 
 dependencies {
