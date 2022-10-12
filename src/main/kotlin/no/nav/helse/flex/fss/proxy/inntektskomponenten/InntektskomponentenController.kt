@@ -1,7 +1,10 @@
 package no.nav.helse.flex.fss.proxy.inntektskomponenten
 
 import com.fasterxml.jackson.databind.JsonNode
-import no.nav.security.token.support.core.api.Unprotected
+import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
+import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.NamespaceAndApp
+import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
+import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.util.LinkedMultiValueMap
@@ -15,10 +18,9 @@ import java.util.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-// TODO @ProtectedWithClaims(issuer = ISSUER_AAD)
-@Unprotected
+@ProtectedWithClaims(issuer = ISSUER_AAD)
 class InntektskomponentenController(
-    // TODO  private val clientIdValidation: ClientIdValidation,
+    private val clientIdValidation: ClientIdValidation,
     private val inntektskomponentenRestTemplate: RestTemplate,
     @Value("\${INNTEKTSKOMPONENT_BASE_URL}") private val inntektskomponentenBaseUrl: String,
 ) {
@@ -28,15 +30,14 @@ class InntektskomponentenController(
         produces = [MediaType.APPLICATION_JSON_VALUE],
         consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun opprettOppgave(@RequestBody req: JsonNode): ResponseEntity<Any> {
-        /*
-        TODO
-                clientIdValidation.validateClientId(
-                    listOf(
-                        NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-narmesteleder-varsler")
-                    )
-                )
-        */
+    fun hentInntektsliste(@RequestBody req: JsonNode): ResponseEntity<Any> {
+
+        clientIdValidation.validateClientId(
+            listOf(
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend")
+            )
+        )
+
         val headers = HttpHeaders()
         headers["Nav-Consumer-Id"] = "srvflexfssproxy"
         headers["Nav-Call-Id"] = UUID.randomUUID().toString()
