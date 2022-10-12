@@ -41,10 +41,15 @@ spec:
         - application: flex-joark-mottak
           namespace: flex
           cluster: {{environment}}-gcp
+        - application: sykepengesoknad-backend
+          namespace: flex
+          cluster: {{environment}}-gcp
   azure:
     application:
       enabled: true
       tenant: {{azureTenant}}
+  envFrom:
+    - secret: flex-fss-proxy-serviceuser
   env:
   {{#each env}}
      - name: {{@key}}

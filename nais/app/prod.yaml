@@ -7,3 +7,5 @@ ingress: https://flex-fss-proxy.prod-fss-pub.nais.io
 env:
   MODIACONTEXTHOLDER_URL: https://modiacontextholder.intern.nav.no
   KODEVERK_URL: https://kodeverk.nais.adeo.no
+  SECURITY_TOKEN_SERVICE_TOKEN_URL: https://security-token-service.nais.adeo.no/rest/v1/sts/token
+  INNTEKTSKOMPONENT_BASE_URL: https://app.adeo.no/inntektskomponenten-ws/rs

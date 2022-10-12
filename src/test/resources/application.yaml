@@ -1,4 +1,4 @@
-AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"}]"
+AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"},{\"name\":\"dev-gcp:flex:sykepengesoknad-backend\",\"clientId\":\"sykepengesoknad-backend-client-id\"}]"
 syfosoknad.url: http://syfosoknad
 modiacontextholder.url: http://modiacontexthodler
 kodeverk.url: http://fkv
@@ -19,11 +19,10 @@ no.nav.security.jwt:
           client-id: "USER"
           client-secret: "PWD"
           client-auth-method: client_secret_basic
-      syfosoknad-client-credentials:
-        token-endpoint-url: http://localhost:${mock-oauth2-server.port}/aad/token
-        grant-type: client_credentials
-        scope: api://flex-fss-proxy/.default
-        authentication:
-          client-id: "USER"
-          client-secret: "PWD"
-          client-auth-method: client_secret_basic
+
+serviceuser:
+  username: "uname"
+  password: "pass"
+
+security-token-service-token.url: http://sts
+INNTEKTSKOMPONENT_BASE_URL: http://inntektskomp
