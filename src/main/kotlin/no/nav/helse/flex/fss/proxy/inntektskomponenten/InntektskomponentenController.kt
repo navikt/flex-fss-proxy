@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.NamespaceAndApp
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
+import no.nav.helse.flex.fss.proxy.logger
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
@@ -14,6 +15,7 @@ import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
 import java.net.URI
+import java.time.Instant
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
@@ -24,6 +26,7 @@ class InntektskomponentenController(
     private val inntektskomponentenRestTemplate: RestTemplate,
     @Value("\${INNTEKTSKOMPONENT_BASE_URL}") private val inntektskomponentenBaseUrl: String,
 ) {
+    val log = logger()
 
     @PostMapping(
         "/api/inntektskomponenten/api/v1/hentinntektliste",
@@ -51,9 +54,13 @@ class InntektskomponentenController(
             HttpMethod.POST,
             URI("$inntektskomponentenBaseUrl/api/v1/hentinntektliste")
         )
+        val start = Instant.now().toEpochMilli()
 
         val responseEntity: ResponseEntity<Any> = inntektskomponentenRestTemplate.exchange(forward)
 
+        (Instant.now().toEpochMilli() - start).let {
+            log.info("Kall til inntektskomponentenRestTemplate.exchange tok ${it.toInt()} millisekunder")
+        }
         val newHeaders: MultiValueMap<String, String> = LinkedMultiValueMap()
         responseEntity.headers.contentType?.let {
             newHeaders.set("Content-type", it.toString())
