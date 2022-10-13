@@ -38,7 +38,15 @@ class InntektskomponentenRestTemplateConfiguration {
         oAuth2AccessTokenService: OAuth2AccessTokenService
     ): ClientHttpRequestInterceptor {
         return ClientHttpRequestInterceptor { request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution ->
+            val startToken = Instant.now().toEpochMilli()
+
             val response = oAuth2AccessTokenService.getAccessToken(clientProperties)
+
+            val sluttToken = Instant.now().toEpochMilli()
+            (sluttToken - startToken).let {
+                log.info("Kall til oAuth2AccessTokenService tok ${it.toInt()} millisekunder")
+            }
+
             request.headers.setBearerAuth(response.accessToken)
             val start = Instant.now().toEpochMilli()
             val execute = execution.execute(request, body)
