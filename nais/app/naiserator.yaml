@@ -44,6 +44,9 @@ spec:
         - application: sykepengesoknad-backend
           namespace: flex
           cluster: {{environment}}-gcp
+        - application: sykepengesoknad-andre-inntektskilder-logikk-test
+          namespace: flex
+          cluster: {{environment}}-gcp
   azure:
     application:
       enabled: true
