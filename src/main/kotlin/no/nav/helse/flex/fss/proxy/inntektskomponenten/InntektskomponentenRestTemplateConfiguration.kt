@@ -1,5 +1,6 @@
 package no.nav.helse.flex.fss.proxy.inntektskomponenten
 
+import no.nav.helse.flex.fss.proxy.logger
 import no.nav.security.token.support.client.core.ClientProperties
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -10,9 +11,12 @@ import org.springframework.http.HttpRequest
 import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestTemplate
+import java.time.Instant
 
 @Configuration
 class InntektskomponentenRestTemplateConfiguration {
+
+    val log = logger()
 
     @Bean
     fun inntektskomponentenRestTemplate(
@@ -36,7 +40,12 @@ class InntektskomponentenRestTemplateConfiguration {
         return ClientHttpRequestInterceptor { request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution ->
             val response = oAuth2AccessTokenService.getAccessToken(clientProperties)
             request.headers.setBearerAuth(response.accessToken)
-            execution.execute(request, body)
+            val start = Instant.now().toEpochMilli()
+            val execute = execution.execute(request, body)
+            val slutt = Instant.now().toEpochMilli()
+            val tid = slutt - start
+            log.info("Kall til inntektskomponenten tok ${tid.toInt()} millisekunder")
+            execute
         }
     }
 }
