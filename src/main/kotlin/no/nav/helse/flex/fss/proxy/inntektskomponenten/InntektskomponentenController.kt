@@ -80,4 +80,21 @@ class InntektskomponentenController(
         }
         response.outputStream.write(e.responseBodyAsByteArray)
     }
+
+    data class Pong(val ping: Instant)
+
+    @PostMapping(
+        "/api/ping",
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun ping(): Pong {
+
+        clientIdValidation.validateClientId(
+            listOf(
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend"),
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-andre-inntektskilder-logikk-test")
+            )
+        )
+        return Pong(Instant.now())
+    }
 }
