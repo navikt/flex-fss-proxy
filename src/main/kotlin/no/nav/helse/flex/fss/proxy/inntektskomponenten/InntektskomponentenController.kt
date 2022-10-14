@@ -83,7 +83,7 @@ class InntektskomponentenController(
 
     data class Pong(val ping: Instant)
 
-    @PostMapping(
+    @GetMapping(
         "/api/ping",
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
