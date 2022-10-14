@@ -30,3 +30,5 @@ val OBJECT_MAPPER = ObjectMapper()
     .registerModule(JavaTimeModule())
     .registerModule(KotlinModule.Builder().build())
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+fun Any.serialisertTilString(): String = OBJECT_MAPPER.writeValueAsString(this)

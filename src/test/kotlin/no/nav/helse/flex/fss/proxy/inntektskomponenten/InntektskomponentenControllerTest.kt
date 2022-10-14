@@ -1,6 +1,7 @@
 package no.nav.helse.flex.fss.proxy.inntektskomponenten
 
 import no.nav.helse.flex.fss.proxy.Application
+import no.nav.helse.flex.fss.proxy.serialisertTilString
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
@@ -44,6 +45,7 @@ class InntektskomponentenControllerTest {
     private lateinit var inntektskomponentenRestTemplate: RestTemplate
 
     private lateinit var mockServer: MockRestServiceServer
+    val hentInntekterRequest = HentInntekterRequest(ident = Ident("sdf", "sdf"), ainntektsfilter = "8-28", "sdf", "juni", "august")
 
     @BeforeEach
     fun init() {
@@ -55,7 +57,8 @@ class InntektskomponentenControllerTest {
         mockMvc.perform(
             post("/api/inntektskomponenten/api/v1/hentinntektliste")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"fnr\": 23}")
+                .content(hentInntekterRequest.serialisertTilString())
+                .content(hentInntekterRequest.serialisertTilString())
 
         )
             .andExpect(MockMvcResultMatchers.status().isUnauthorized)
@@ -73,12 +76,12 @@ class InntektskomponentenControllerTest {
             .andRespond(
                 MockRestResponseCreators.withStatus(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body("{\"hei\": 23}")
+                    .body(HentInntekterResponse(ident = hentInntekterRequest.ident).serialisertTilString())
             )
         mockMvc.perform(
             post("/api/inntektskomponenten/api/v1/hentinntektliste")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"fnr\": 23}")
+                .content(hentInntekterRequest.serialisertTilString())
                 .header("Authorization", "Bearer " + token())
 
         )
@@ -90,7 +93,7 @@ class InntektskomponentenControllerTest {
     fun `feil client returnerer 403`() {
         mockMvc.perform(
             post("/api/inntektskomponenten/api/v1/hentinntektliste")
-                .content("{ \"fnr\": 2}")
+                .content(hentInntekterRequest.serialisertTilString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token(clientId = "en-annen-client"))
         )

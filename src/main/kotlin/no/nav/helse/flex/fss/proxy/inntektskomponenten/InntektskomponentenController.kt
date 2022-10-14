@@ -1,19 +1,16 @@
 package no.nav.helse.flex.fss.proxy.inntektskomponenten
 
-import com.fasterxml.jackson.databind.JsonNode
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.NamespaceAndApp
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
 import no.nav.helse.flex.fss.proxy.logger
+import no.nav.helse.flex.fss.proxy.serialisertTilString
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.exchange
 import java.net.URI
 import java.time.Instant
 import java.util.*
@@ -33,7 +30,7 @@ class InntektskomponentenController(
         produces = [MediaType.APPLICATION_JSON_VALUE],
         consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun hentInntektsliste(@RequestBody req: JsonNode): ResponseEntity<Any> {
+    fun hentInntektsliste(@RequestBody req: HentInntekterRequest): HentInntekterResponse {
 
         clientIdValidation.validateClientId(
             listOf(
@@ -48,25 +45,28 @@ class InntektskomponentenController(
         headers.contentType = MediaType.APPLICATION_JSON
         headers.accept = listOf(MediaType.APPLICATION_JSON)
 
-        val forward: RequestEntity<Any> = RequestEntity(
-            req,
-            headers,
-            HttpMethod.POST,
-            URI("$inntektskomponentenBaseUrl/api/v1/hentinntektliste")
-        )
-        val start = Instant.now().toEpochMilli()
+        val result = inntektskomponentenRestTemplate
+            .exchange(
+                URI("$inntektskomponentenBaseUrl/api/v1/hentinntektliste"),
+                HttpMethod.POST,
+                HttpEntity(
+                    req.serialisertTilString(),
+                    headers
+                ),
+                HentInntekterResponse::class.java
+            )
 
-        val responseEntity: ResponseEntity<Any> = inntektskomponentenRestTemplate.exchange(forward)
-
-        (Instant.now().toEpochMilli() - start).let {
-            log.info("Kall til inntektskomponentenRestTemplate.exchange tok ${it.toInt()} millisekunder")
+        if (result.statusCode != HttpStatus.OK) {
+            val message = "Kall mot inntektskomp feiler med HTTP-" + result.statusCode
+            log.error(message)
+            throw RuntimeException(message)
         }
-        val newHeaders: MultiValueMap<String, String> = LinkedMultiValueMap()
-        responseEntity.headers.contentType?.let {
-            newHeaders.set("Content-type", it.toString())
-        }
 
-        return responseEntity
+        result.body?.let { return it }
+
+        val message = "Kall mot inntektskomp returnerer ikke data"
+        log.error(message)
+        throw RuntimeException(message)
     }
 
     @ExceptionHandler(HttpStatusCodeException::class)
