@@ -45,7 +45,7 @@ class InntektskomponentenControllerTest {
     private lateinit var inntektskomponentenRestTemplate: RestTemplate
 
     private lateinit var mockServer: MockRestServiceServer
-    val hentInntekterRequest = HentInntekterRequest(ident = Ident("sdf", "sdf"), ainntektsfilter = "8-28", "sdf", "juni", "august")
+    val hentInntekterRequest = HentInntekterRequest(ident = Aktoer("sdf", "sdf"), ainntektsfilter = "8-28", "sdf", "juni", "august")
 
     @BeforeEach
     fun init() {

@@ -6,18 +6,19 @@ import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
 import no.nav.helse.flex.fss.proxy.logger
 import no.nav.helse.flex.fss.proxy.serialisertTilString
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import java.net.URI
-import java.time.Instant
+import java.time.LocalDate
+import java.time.YearMonth
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@ProtectedWithClaims(issuer = ISSUER_AAD)
 class InntektskomponentenController(
     private val clientIdValidation: ClientIdValidation,
     private val inntektskomponentenRestTemplate: RestTemplate,
@@ -30,6 +31,7 @@ class InntektskomponentenController(
         produces = [MediaType.APPLICATION_JSON_VALUE],
         consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
+    @ProtectedWithClaims(issuer = ISSUER_AAD)
     fun hentInntektsliste(@RequestBody req: HentInntekterRequest): HentInntekterResponse {
 
         clientIdValidation.validateClientId(
@@ -79,22 +81,5 @@ class InntektskomponentenController(
             }
         }
         response.outputStream.write(e.responseBodyAsByteArray)
-    }
-
-    data class Pong(val ping: Instant)
-
-    @GetMapping(
-        "/api/ping",
-        produces = [MediaType.APPLICATION_JSON_VALUE]
-    )
-    fun ping(): Pong {
-
-        clientIdValidation.validateClientId(
-            listOf(
-                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend"),
-                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-andre-inntektskilder-logikk-test")
-            )
-        )
-        return Pong(Instant.now())
     }
 }
