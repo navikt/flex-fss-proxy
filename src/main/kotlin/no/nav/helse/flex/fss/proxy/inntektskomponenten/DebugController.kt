@@ -20,7 +20,7 @@ class DebugController(
     @Value("\${INNTEKTSKOMPONENT_BASE_URL}") private val inntektskomponentenBaseUrl: String,
     private val clientIdValidation: ClientIdValidation,
 
-    ) {
+) {
 
     @PostMapping(
         "/api/inntektskomponenten/api/v1/hentinntektliste/debug",
@@ -38,7 +38,6 @@ class DebugController(
                 )
             )
         )
-
 
         val headers = HttpHeaders()
         headers["Nav-Consumer-Id"] = "srvflexfssproxy"
