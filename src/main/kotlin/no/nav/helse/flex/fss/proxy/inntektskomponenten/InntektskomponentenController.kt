@@ -6,15 +6,12 @@ import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
 import no.nav.helse.flex.fss.proxy.logger
 import no.nav.helse.flex.fss.proxy.serialisertTilString
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import java.net.URI
-import java.time.LocalDate
-import java.time.YearMonth
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 

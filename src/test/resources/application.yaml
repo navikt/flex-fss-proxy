@@ -24,5 +24,7 @@ serviceuser:
   username: "uname"
   password: "pass"
 
+SERVICEUSER_PASSWORD: pass
+
 security-token-service-token.url: http://sts
 INNTEKTSKOMPONENT_BASE_URL: http://inntektskomp
