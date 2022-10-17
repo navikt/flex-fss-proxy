@@ -1,5 +1,6 @@
 package no.nav.helse.flex.fss.proxy.inntektskomponenten
 
+import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
@@ -17,8 +18,9 @@ import javax.servlet.http.HttpServletResponse
 class DebugController(
     private val inntektskomponentenRestTemplate: RestTemplate,
     @Value("\${INNTEKTSKOMPONENT_BASE_URL}") private val inntektskomponentenBaseUrl: String,
-    @Value("\${SERVICEUSER_PASSWORD}") private val sharedSecret: String,
-) {
+    private val clientIdValidation: ClientIdValidation,
+
+    ) {
 
     @PostMapping(
         "/api/inntektskomponenten/api/v1/hentinntektliste/debug",
@@ -26,11 +28,17 @@ class DebugController(
         consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
     @Unprotected
-    fun hentInntektsliste(@RequestBody req: HentInntekterRequest, @RequestHeader authorization: String): ResponseEntity<Any> {
+    fun hentInntektsliste(@RequestBody req: HentInntekterRequest): ResponseEntity<Any> {
 
-        if (authorization != sharedSecret) {
-            throw RuntimeException("Ingen tilgang")
-        }
+        clientIdValidation.validateClientId(
+            listOf(
+                ClientIdValidation.NamespaceAndApp(
+                    namespace = "flex",
+                    app = "sykepengesoknad-andre-inntektskilder-logikk-test"
+                )
+            )
+        )
+
 
         val headers = HttpHeaders()
         headers["Nav-Consumer-Id"] = "srvflexfssproxy"
