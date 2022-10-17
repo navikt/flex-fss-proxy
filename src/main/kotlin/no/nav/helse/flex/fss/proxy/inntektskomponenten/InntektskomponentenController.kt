@@ -83,7 +83,7 @@ class InntektskomponentenController(
         response.outputStream.write(e.responseBodyAsByteArray)
     }
 
-    @PostMapping(
+    @GetMapping(
         "/api/inntektskomponenten/api/v1/hentinntektliste/apen",
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
