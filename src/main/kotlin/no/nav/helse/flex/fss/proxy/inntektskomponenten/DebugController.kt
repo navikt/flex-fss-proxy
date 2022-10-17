@@ -57,7 +57,7 @@ class DebugController(
         responseEntity.headers.contentType?.let {
             newHeaders.set("Content-type", it.toString())
         }
-        return responseEntity
+        return ResponseEntity(responseEntity.body, newHeaders, responseEntity.statusCode)
     }
 
     @ExceptionHandler(HttpStatusCodeException::class)
