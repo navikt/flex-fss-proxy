@@ -93,7 +93,7 @@ class InntektskomponentenController(
         val req = HentInntekterRequest(
             ainntektsfilter = "8-28",
             formaal = formaal,
-            ident = Ident(identifikator = fnr, aktoerType = "NATURLIG_IDENT"),
+            ident = Aktoer(identifikator = fnr, aktoerType = "NATURLIG_IDENT"),
             maanedFom = YearMonth.from(LocalDate.now().minusMonths(3)).toString(),
             maanedTom = YearMonth.from(LocalDate.now()).toString()
         )

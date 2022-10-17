@@ -2,36 +2,31 @@ package no.nav.helse.flex.fss.proxy.inntektskomponenten
 
 data class HentInntekterRequest(
 
-    val ident: Ident,
+    val ident: Aktoer,
     val ainntektsfilter: String,
     val formaal: String,
     val maanedFom: String,
     val maanedTom: String
 )
 
-data class Ident(
-
-    val identifikator: String,
-    val aktoerType: String
-)
-
 data class HentInntekterResponse(
     val arbeidsInntektMaaned: List<ArbeidsInntektMaaned> = emptyList(),
-    val ident: Ident
+    val ident: Aktoer
 )
 
-data class Virksomhet(
+data class Aktoer(
     val identifikator: String,
     val aktoerType: String
 )
 
 data class InntektListe(
     val inntektType: String,
-    val virksomhet: Virksomhet,
+    val virksomhet: Aktoer,
 )
 
 data class ArbeidsforholdFrilanser(
     val arbeidsforholdstype: String,
+    val arbeidsgiver: Aktoer
 )
 
 data class ArbeidsInntektMaaned(
