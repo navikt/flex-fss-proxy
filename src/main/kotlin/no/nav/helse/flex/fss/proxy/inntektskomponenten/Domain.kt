@@ -28,7 +28,10 @@ data class Virksomhet(
 data class InntektListe(
     val inntektType: String,
     val virksomhet: Virksomhet,
+)
 
+data class ArbeidsforholdFrilanser(
+    val arbeidsforholdstype: String,
 )
 
 data class ArbeidsInntektMaaned(
@@ -37,5 +40,6 @@ data class ArbeidsInntektMaaned(
 )
 
 data class ArbeidsInntektInformasjon(
-    val inntektListe: List<InntektListe> = emptyList()
+    val inntektListe: List<InntektListe> = emptyList(),
+    val arbeidsforholdListe: List<ArbeidsforholdFrilanser> = emptyList()
 )
