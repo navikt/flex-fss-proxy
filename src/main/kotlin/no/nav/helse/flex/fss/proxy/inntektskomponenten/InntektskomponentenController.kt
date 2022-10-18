@@ -33,8 +33,7 @@ class InntektskomponentenController(
 
         clientIdValidation.validateClientId(
             listOf(
-                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend"),
-                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-andre-inntektskilder-logikk-test")
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend")
             )
         )
 
