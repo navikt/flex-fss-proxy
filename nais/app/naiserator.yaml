@@ -35,9 +35,6 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: spinnsyn-frontend-interne
-          namespace: flex
-          cluster: {{environment}}-gcp
         - application: flex-joark-mottak
           namespace: flex
           cluster: {{environment}}-gcp
