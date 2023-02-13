@@ -1,5 +1,6 @@
 package no.nav.helse.flex.fss.proxy.felleskodeverk
 
+import jakarta.servlet.http.HttpServletResponse
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ClientIdValidation.NamespaceAndApp
 import no.nav.helse.flex.fss.proxy.clientidvalidation.ISSUER_AAD
@@ -13,7 +14,6 @@ import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
 import java.net.URI
-import javax.servlet.http.HttpServletResponse
 
 @RestController
 @ProtectedWithClaims(issuer = ISSUER_AAD)
@@ -62,7 +62,7 @@ class FelleskodeverkController(
 
     @ExceptionHandler(HttpStatusCodeException::class)
     fun handleHttpStatusCodeException(response: HttpServletResponse, e: HttpStatusCodeException) {
-        response.status = e.rawStatusCode
+        response.status = e.statusCode.value()
         if (e.responseHeaders != null) {
             val contentType = e.responseHeaders!!.contentType
             if (contentType != null) {
