@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.7.5"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
-    kotlin("plugin.spring") version "1.8.10"
+    id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
     kotlin("jvm") version "1.8.10"
+    kotlin("plugin.spring") version "1.8.10"
 }
 
 group = "no.nav.helse.flex"
@@ -12,18 +13,7 @@ version = "1.0"
 description = "flex-fss-proxy"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-buildscript {
-    repositories {
-        maven("https://plugins.gradle.org/m2/")
-    }
-    dependencies {
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:11.1.0")
-    }
-}
-
-ext["okhttp3.version"] = "4.9.0" // For at token support testen kjører (tror jeg)
-
-apply(plugin = "org.jlleitschuh.gradle.ktlint")
+ext["okhttp3.version"] = "4.9.3" // Token-support tester trenger Mockwebserver.
 
 repositories {
     mavenCentral()
@@ -36,31 +26,27 @@ repositories {
     }
 }
 
-val tokenSupportVersion = "2.1.9"
+val tokenSupportVersion = "3.0.3"
 val logstashEncoderVersion = "7.2"
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.retry:spring-retry")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
-    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
+    implementation("org.springframework.retry:spring-retry")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.slf4j:slf4j-api")
     implementation("org.aspectj:aspectjrt")
     implementation("org.aspectj:aspectjweaver")
-    implementation("org.hibernate.validator:hibernate-validator")
-    implementation("org.springframework.boot:spring-boot-starter-logging")
-    implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
+    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
+    implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
 
     testImplementation("no.nav.security:token-validation-spring-test:$tokenSupportVersion")
-
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.hamcrest:hamcrest-library")
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
