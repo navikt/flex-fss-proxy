@@ -10,7 +10,7 @@ class PlainRestTemplateConfiguration {
 
     @Bean
     fun plainRestTemplate(
-        restTemplateBuilder: RestTemplateBuilder,
+        restTemplateBuilder: RestTemplateBuilder
     ): RestTemplate =
         restTemplateBuilder.build()
 }

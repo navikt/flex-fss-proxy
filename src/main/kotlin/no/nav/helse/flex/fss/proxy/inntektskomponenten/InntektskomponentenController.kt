@@ -19,7 +19,7 @@ import java.util.*
 class InntektskomponentenController(
     private val clientIdValidation: ClientIdValidation,
     private val inntektskomponentenRestTemplate: RestTemplate,
-    @Value("\${INNTEKTSKOMPONENT_BASE_URL}") private val inntektskomponentenBaseUrl: String,
+    @Value("\${INNTEKTSKOMPONENT_BASE_URL}") private val inntektskomponentenBaseUrl: String
 ) {
     val log = logger()
 
@@ -30,7 +30,6 @@ class InntektskomponentenController(
     )
     @ProtectedWithClaims(issuer = ISSUER_AAD)
     fun hentInntektsliste(@RequestBody req: HentInntekterRequest): HentInntekterResponse {
-
         clientIdValidation.validateClientId(
             listOf(
                 NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend")

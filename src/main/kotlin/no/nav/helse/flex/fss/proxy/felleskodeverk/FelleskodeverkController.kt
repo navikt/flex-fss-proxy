@@ -20,7 +20,7 @@ import java.net.URI
 class FelleskodeverkController(
     private val clientIdValidation: ClientIdValidation,
     private val plainRestTemplate: RestTemplate,
-    @Value("\${kodeverk.url}") private val kodeverkUrl: String,
+    @Value("\${kodeverk.url}") private val kodeverkUrl: String
 ) {
 
     @GetMapping(
@@ -28,7 +28,6 @@ class FelleskodeverkController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun krutkoder(requestEntity: RequestEntity<Any>): ResponseEntity<Any> {
-
         clientIdValidation.validateClientId(
             listOf(
                 NamespaceAndApp(namespace = "flex", app = "flex-joark-mottak")
