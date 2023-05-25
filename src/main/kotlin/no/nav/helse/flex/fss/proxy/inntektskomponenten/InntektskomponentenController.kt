@@ -32,7 +32,8 @@ class InntektskomponentenController(
     fun hentInntektsliste(@RequestBody req: HentInntekterRequest): HentInntekterResponse {
         clientIdValidation.validateClientId(
             listOf(
-                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend")
+                NamespaceAndApp(namespace = "flex", app = "sykepengesoknad-backend"),
+                NamespaceAndApp(namespace = "flex", app = "flex-andre-inntektskilder-metrikker")
             )
         )
 
