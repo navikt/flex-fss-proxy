@@ -38,9 +38,6 @@ spec:
         - application: flex-joark-mottak
           namespace: flex
           cluster: {{environment}}-gcp
-        - application: sykepengesoknad-backend
-          namespace: flex
-          cluster: {{environment}}-gcp
         - application: flex-andre-inntektskilder-metrikker
           namespace: flex
           cluster: {{environment}}-gcp

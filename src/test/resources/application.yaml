@@ -1,4 +1,4 @@
-AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"},{\"name\":\"dev-gcp:flex:sykepengesoknad-backend\",\"clientId\":\"sykepengesoknad-backend-client-id\"}]"
+AZURE_APP_PRE_AUTHORIZED_APPS: "[{\"name\":\"dev-gcp:flex:spinnsyn-frontend-interne\",\"clientId\":\"spinnsyn-frontend-interne-client-id\"},{\"name\":\"dev-gcp:flex:flex-andre-inntektskilder-metrikker\",\"clientId\":\"flex-andre-inntektskilder-metrikker-client-id\"}]"
 syfosoknad.url: http://syfosoknad
 modiacontextholder.url: http://modiacontexthodler
 kodeverk.url: http://fkv
